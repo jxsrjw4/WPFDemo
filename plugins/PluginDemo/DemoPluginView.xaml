@@ -4,13 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:prism="http://prismlibrary.com/"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+              d:DesignWidth="500" d:DesignHeight="500">
     <Grid>
-        <Button x:Name="button" Content="{Binding Title}" HorizontalAlignment="Left" Margin="90,70,0,0" VerticalAlignment="Top" Height="56" Width="170" Command="{Binding ExecuteDelegateCommand}"/>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="74" Margin="498,225,0,0" Text="sss" TextWrapping="Wrap" VerticalAlignment="Top" Width="119"/>
-        <ContentControl prism:RegionManager.RegionName="LogRegion" />
+      
+
+        <materialDesign:TransitionerSlide x:Name="TrainsitionigContentSlide" OpeningEffect="{materialDesign:TransitionEffect SlideInFromLeft, Duration=0:0:0.8}">
+            <StackPanel Background="#33ff0000">
+                <Button x:Name="button1" Content="{Binding Title}" HorizontalAlignment="Left" Width="50" Height="50" VerticalAlignment="Top"  Command="{Binding ExecuteDelegateCommand}"/>
+                <Image Source="https://img.dotnet9.com/20200124165746.png"/>
+            </StackPanel>
+        </materialDesign:TransitionerSlide>
     </Grid>
 
 

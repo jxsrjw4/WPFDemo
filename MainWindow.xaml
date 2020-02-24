@@ -8,14 +8,58 @@
         mc:Ignorable="d"
         xmlns:hc="https://handyorg.github.io/handycontrol"
         xmlns:controls="clr-namespace:HandyControl.Controls;assembly=HandyControl"
+        WindowStartupLocation="CenterScreen"  ResizeMode="NoResize" WindowStyle="None" 
         Title="{Binding UserInfo}" Height="600" Width="1024">
-    <Grid Background="#FFEEEEEE" >
+    <Grid Background="#FFEEEEEE"  MouseDown="Grid_MouseDown">
         <StackPanel VerticalAlignment="Top">
-            <Grid Background="#FF0069C0" Height="50"/>
+            <Grid Background="#FF0069C0" Height="10"/>
+            <Grid Margin="5">
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <TextBlock Text="IT技术支持" VerticalAlignment="Center" FontSize="20" FontFamily="Champagne &amp; Limousines" Margin="20 0"></TextBlock>
+                    <Button Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Foreground="Gray">
+                        <materialDesign:PackIcon Kind="Wechat"/>
+                    </Button>
+                    <Button Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Foreground="Gray">
+                        <materialDesign:PackIcon Kind="Qqchat"/>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 0 ">
+                    <Button Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Foreground="Gray">
+                        <materialDesign:PackIcon Kind="BellOutline"/>
+                    </Button>
+                    <Button Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Foreground="Gray">
+                        <materialDesign:PackIcon Kind="Settings"/>
+                    </Button>
+                    <Button Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Foreground="Gray" Cursor="Hand">
+                        <materialDesign:PackIcon Kind="Close"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
         </StackPanel>
-        
-        <ContentControl prism:RegionManager.RegionName="ContentRegion" />
-        
+        <Grid Margin="250 55 0 0">
+            <ContentControl  HorizontalAlignment="Center" VerticalAlignment="Center" prism:RegionManager.RegionName="ContentRegion" />
+        </Grid>
+        <Grid Width="250" HorizontalAlignment="Left" Background="#FF222222">
+            <materialDesign:TransitioningContent x:Name="TrainsitionigContentSlide" OpeningEffect="{materialDesign:TransitionEffect SlideInFromLeft, Duration=0:0:0.2}">
+                <Grid x:Name="GridCursor" Margin="0 100 0 0" Background="#FF0069C0" Width="10" HorizontalAlignment="Left" Height="60" VerticalAlignment="Top"/>
+            </materialDesign:TransitioningContent>
+            <Image Source="https://img.dotnet9.com/logo-head.png" VerticalAlignment="Top"/>
+            <Image Source="https://img.dotnet9.com/logo-foot.png" VerticalAlignment="Bottom"/>
+            <ListView  x:Name="ListViewMenu" Margin="0 100 0 0" Foreground="Gray" FontFamily="Champagne &amp; Limousines" FontSize="18" SelectionChanged="ListViewMenu_SelectionChanged" SelectedIndex="0">
+                <ListViewItem Height="60">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Home" Width="30" Height="30" VerticalAlignment="Center" Margin="5"></materialDesign:PackIcon>
+                        <TextBlock Text="首页" FontSize="17" VerticalAlignment="Center" Margin="20 0"></TextBlock>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem Height="60">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="User" Width="30" Height="30" VerticalAlignment="Center" Margin="5"></materialDesign:PackIcon>
+                        <TextBlock Text="Menu1" FontSize="17" VerticalAlignment="Center" Margin="20 0"></TextBlock>
+                    </StackPanel>
+                </ListViewItem>
+            </ListView>
+        </Grid>
 
     </Grid>
 </Window>
