@@ -15,9 +15,9 @@ namespace WPFDemo
     /// <summary>
     /// Login.xaml 的交互逻辑
     /// </summary>
-    public partial class Login : Window
+    public partial class LoginView : Window
     {
-        public Login()
+        public LoginView()
         {
             InitializeComponent();
         }

@@ -21,8 +21,10 @@ namespace WPFDemo
     /// </summary>
     public partial class MainWindow : Window
     {
+        private IRegionManager _regionManager;
         public MainWindow(IRegionManager regionManager)
         {
+            _regionManager = regionManager;
             InitializeComponent();
         }
 
@@ -33,16 +35,25 @@ namespace WPFDemo
 
         private void ListViewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int index = ListViewMenu.SelectedIndex;
+            int index = 0;
             MoveCursorMenu(index);
 
-            switch (index)
+            string navigatePath = "";
+           switch(index)
             {
                 case 0:
+                    navigatePath = "LoginView";
                     break;
-                    default:
+                default:
+                    navigatePath = "DemoPlugin";
                     break;
             }
+
+            if (navigatePath != null)
+            {
+                _regionManager.RequestNavigate("ContentRegion", navigatePath);
+            }
+                
         }
 
         private void MoveCursorMenu(int index)

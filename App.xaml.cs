@@ -21,7 +21,7 @@ namespace WPFDemo
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            
+            containerRegistry.RegisterForNavigation<LoginView>("LoginView");
         }
 
         protected override IModuleCatalog CreateModuleCatalog()

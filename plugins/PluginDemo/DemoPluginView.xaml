@@ -9,8 +9,8 @@
              mc:Ignorable="d" 
               d:DesignWidth="500" d:DesignHeight="500">
     <Grid>
-      
 
+        <Image Source="https://img.dotnet9.com/20200124165746.png"/>
         <materialDesign:TransitionerSlide x:Name="TrainsitionigContentSlide" OpeningEffect="{materialDesign:TransitionEffect SlideInFromLeft, Duration=0:0:0.8}">
             <StackPanel Background="#33ff0000">
                 <Button x:Name="button1" Content="{Binding Title}" HorizontalAlignment="Left" Width="50" Height="50" VerticalAlignment="Top"  Command="{Binding ExecuteDelegateCommand}"/>

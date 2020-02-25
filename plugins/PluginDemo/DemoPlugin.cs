@@ -13,12 +13,12 @@ namespace plugin_demo
         public void OnInitialized(IContainerProvider containerProvider)
         {
             var regionManager = containerProvider.Resolve<IRegionManager>();
-            regionManager.RegisterViewWithRegion("ContentRegion", typeof(DemoPluginView));
+            regionManager.RegisterViewWithRegion("PluginView", typeof(DemoPluginView));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            
+            containerRegistry.RegisterForNavigation<DemoPluginView>("DemoPlugin");
         }
         
     }
