@@ -10,6 +10,7 @@
         xmlns:controls="clr-namespace:HandyControl.Controls;assembly=HandyControl"
         prism:ViewModelLocator.AutoWireViewModel="True"
         WindowStartupLocation="CenterScreen"  ResizeMode="NoResize" WindowStyle="None" 
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
         Title="{Binding UserInfo}" Height="600" Width="1024">
     
     <Window.Resources>
@@ -21,7 +22,7 @@
         </Style>
     </Window.Resources>
     
-    <Grid Background="#FFEEEEEE"  MouseDown="Grid_MouseDown">
+    <Grid Background="#FFEEEEEE" >
         <StackPanel VerticalAlignment="Top">
             <Grid Background="#FF0069C0" Height="10"/>
             <Grid Margin="5">
@@ -51,27 +52,25 @@
         </StackPanel>
         
         <Grid Margin="250 55 0 0">
-            <TabControl Name="PluginArea" HorizontalAlignment="Center" VerticalAlignment="Center" prism:RegionManager.RegionName="ContentRegion" />
+            
+            <TabControl Name="PluginArea" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                        prism:RegionManager.RegionName="ContentRegion" 
+                        prism:RegionManager.RegionContext="{Binding SelectedItem, ElementName=_listOfMenu}"/>
         </Grid>
         <Grid Width="250" HorizontalAlignment="Left" Background="#FF222222">
-            <materialDesign:TransitioningContent x:Name="TrainsitionigContentSlide" OpeningEffect="{materialDesign:TransitionEffect SlideInFromLeft, Duration=0:0:0.2}">
-                <Grid x:Name="GridCursor" Margin="0 100 0 0" Background="#FF0069C0" Width="10" HorizontalAlignment="Left" Height="60" VerticalAlignment="Top"/>
-            </materialDesign:TransitioningContent>
             <Image Source="https://img.dotnet9.com/logo-head.png" VerticalAlignment="Top"/>
             <Image Source="https://img.dotnet9.com/logo-foot.png" VerticalAlignment="Bottom"/>
+            <ListView x:Name="ListViewMenu" ItemsSource="{Binding MenuItems}" Margin="0 100" Foreground="LightGray" FontSize="18" SelectedIndex="0">
+                <ListView.ItemTemplate>
+                    <HierarchicalDataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="{Binding MenuItemIcon}" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
+                            <TextBlock Text="{Binding MenuItemName}" FontSize="17" VerticalAlignment="Center" Margin="20 0" />
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                </ListView.ItemTemplate>
 
-            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-                <Menu IsMainMenu="True" ItemsSource="{Binding MenuItems}" Width="525">
-                    <Menu.ItemTemplate>
-                        <HierarchicalDataTemplate ItemContainerStyle="{StaticResource MenuItemStyle}">
-                            <ContentPresenter Content="{Binding MenuName}" RecognizesAccessKey="True" />
-                            <HierarchicalDataTemplate.ItemsSource>
-                                <Binding Path="SubItems" />
-                            </HierarchicalDataTemplate.ItemsSource>
-                        </HierarchicalDataTemplate>
-                    </Menu.ItemTemplate>
-                </Menu>
-            </StackPanel>
+            </ListView>
 
         </Grid>
 

@@ -28,38 +28,10 @@ namespace WPFDemo
             InitializeComponent();
         }
 
-        private void Grid_MouseDown(object sender, MouseButtonEventArgs  e)
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs  e)
         {
             DragMove();
         }
 
-        private void ListViewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            int index = 0;
-            MoveCursorMenu(index);
-
-            string navigatePath = "";
-           switch(index)
-            {
-                case 0:
-                    navigatePath = "LoginView";
-                    break;
-                default:
-                    navigatePath = "DemoPlugin";
-                    break;
-            }
-
-            if (navigatePath != null)
-            {
-                _regionManager.RequestNavigate("ContentRegion", navigatePath);
-            }
-                
-        }
-
-        private void MoveCursorMenu(int index)
-        {
-            TrainsitionigContentSlide.OnApplyTemplate();
-            GridCursor.Margin = new Thickness(0, (100 + (60 * index)), 0, 0);
-        }
     }
 }

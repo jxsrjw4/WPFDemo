@@ -1,11 +1,14 @@
 ﻿using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Mvvm;
+using Prism.Regions;
 using Prism.Unity;
 using System;
 using System.Globalization;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Controls;
+using WPFDemo.Common;
 
 namespace WPFDemo
 {
@@ -28,6 +31,12 @@ namespace WPFDemo
         {
             //通过目录加载插件
             return new DirectoryModuleCatalog() { ModulePath = @".\PluginCache" };
+        }
+
+        protected override void ConfigureRegionAdapterMappings(RegionAdapterMappings regionAdapterMappings)
+        {
+            base.ConfigureRegionAdapterMappings(regionAdapterMappings);
+            regionAdapterMappings.RegisterMapping(typeof(StackPanel), Container.Resolve<StackPanelRegionAdapter>());
         }
 
         protected override void ConfigureViewModelLocator()

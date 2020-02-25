@@ -1,5 +1,6 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Text;
 namespace Plugin.ViewModels
 {
     //Plugin.ViewModels.DemoPluginViewModel
-    public class  DemoPluginViewModel: BindableBase
+    public class  DemoPluginViewModel: BindableBase,INavigationAware, IRegionMemberLifetime
     {
         private string _title = "Prism Unity Application";
 
@@ -18,6 +19,15 @@ namespace Plugin.ViewModels
         }
 
         public DelegateCommand ExecuteDelegateCommand { get; private set; }
+
+        //是否
+        public bool KeepAlive 
+        {
+            get
+            {
+                return true;
+            }
+        }
 
         public DemoPluginViewModel()
         {
@@ -40,8 +50,19 @@ namespace Plugin.ViewModels
             return true;
         }
 
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            ///用于传参
+        }
 
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
 
-
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            
+        }
     }
 }

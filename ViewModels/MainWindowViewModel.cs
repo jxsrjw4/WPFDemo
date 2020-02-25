@@ -1,32 +1,69 @@
-﻿using Prism.Mvvm;
+﻿using Prism.Commands;
+using Prism.Mvvm;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using WPFDemo.Common;
+using WPFDemo.Models;
 
-namespace WPFDemo.ViewModels
+namespace WPFDemo
 {
-    public class Menu
-    { 
-        public string MenuName { get; set; }
-        public string MenuIcon { get; set; }
-        public int OrderId { get; set; }
-    }
     public class MainWindowViewModel: BindableBase
     {
         //菜单
-        private ObservableCollection<Menu> _menuitems = new ObservableCollection<Menu>();
-        public ObservableCollection<Menu> MenuItems
+        private ObservableCollection<MenuItem> _menuitems = new ObservableCollection<MenuItem>();
+        public ObservableCollection<MenuItem> MenuItems
         {
             get { return _menuitems; }
             set { SetProperty(ref _menuitems, value); }
         }
 
-        public MainWindowViewModel()
-        {
-            _menuitems.Add(new  Menu { MenuName = "主页", MenuIcon = "Home", OrderId = 0 });
-            _menuitems.Add(new Menu { MenuName = "用户", MenuIcon = "User", OrderId = 1 });
+        private IRegionManager _regionManager;
 
+        public DelegateCommand<string> NavigateCommand { get; private set; }
+        public DelegateCommand<int> MenuItemChangedCommand { get; private set; }
+
+        public MainWindowViewModel(IRegionManager regionManager)
+        {
+            _regionManager = regionManager;
+            NavigateCommand = new DelegateCommand<string>(NagivateMenu);
+            //MenuItemChangedCommand = new DelegateCommand<int>(ListViewMenu_SelectionChanged);
+            _menuitems.Add(new MenuItem { MenuItemName="主页", MenuItemIcon="Home", pluginInfo = new BasePluginInfo { PluginTypeName="PluginDemoView"} });
+            _menuitems.Add(new MenuItem { MenuItemName = "用户", MenuItemIcon = "User", pluginInfo = new BasePluginInfo { PluginTypeName = "PluginDemoView" } });
+
+        }
+
+        private void ListViewMenu_SelectionChanged(int index)
+        {
+            string navigatePath = "";
+            switch (index)
+            {
+                case 0:
+                    navigatePath = "LoginView";
+                    break;
+                default:
+                    navigatePath = "DemoPlugin";
+                    break;
+            }
+
+            if (navigatePath != null)
+            {
+                _regionManager.RequestNavigate("ContentRegion", navigatePath);
+            }
+
+        }
+
+
+
+
+        private void NagivateMenu(string navigatePath)
+        {
+            if (navigatePath != null)
+            {
+                _regionManager.RequestNavigate("ContentRegion", navigatePath);
+            }
         }
     }
 }
