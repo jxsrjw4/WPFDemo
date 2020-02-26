@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:prism="http://prismlibrary.com/"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:winForms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         mc:Ignorable="d"
         xmlns:hc="https://handyorg.github.io/handycontrol"
         xmlns:controls="clr-namespace:HandyControl.Controls;assembly=HandyControl"
@@ -42,7 +43,7 @@
                     <Button Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Foreground="Gray">
                         <materialDesign:PackIcon Kind="Settings"/>
                     </Button>
-                    <Button Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Foreground="Gray" Cursor="Hand">
+                    <Button Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Foreground="Gray" Cursor="Hand" Click="ButtonClose_Click">
                         <materialDesign:PackIcon Kind="Close"/>
                     </Button>
                     
@@ -50,17 +51,20 @@
             </Grid>
             
         </StackPanel>
-        
+
         <Grid Margin="250 55 0 0">
-            
+            <WindowsFormsHost prism:RegionManager.RegionName="WinfromWrapperRegion" >
+                
+            </WindowsFormsHost>
             <TabControl Name="PluginArea" HorizontalAlignment="Center" VerticalAlignment="Center" 
                         prism:RegionManager.RegionName="ContentRegion" 
                         prism:RegionManager.RegionContext="{Binding SelectedItem, ElementName=_listOfMenu}"/>
+            
         </Grid>
         <Grid Width="250" HorizontalAlignment="Left" Background="#FF222222">
             <Image Source="https://img.dotnet9.com/logo-head.png" VerticalAlignment="Top"/>
             <Image Source="https://img.dotnet9.com/logo-foot.png" VerticalAlignment="Bottom"/>
-            <ListView x:Name="ListViewMenu" ItemsSource="{Binding MenuItems}" Margin="0 100" Foreground="LightGray" FontSize="18" SelectedIndex="0">
+            <ListView x:Name="ListViewMenu" ItemsSource="{Binding MenuItems}" Margin="0 100" Foreground="LightGray" FontSize="18" SelectedIndex="0" SelectionChanged="ListViewMenu_SelectionChanged">
                 <ListView.ItemTemplate>
                     <HierarchicalDataTemplate>
                         <StackPanel Orientation="Horizontal">

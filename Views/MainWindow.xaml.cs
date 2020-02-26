@@ -28,9 +28,35 @@ namespace WPFDemo
             InitializeComponent();
         }
 
+        private void ButtonClose_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs  e)
         {
             DragMove();
+        }
+
+        private void ListViewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int index = ListViewMenu.SelectedIndex;
+            string navigatePath = "";
+            switch (index)
+            {
+                case 0:
+                    navigatePath = "WinformPluginWrapper";
+                    break;
+                default:
+                    navigatePath = "DemoPlugin";
+                    break;
+            }
+
+            if (navigatePath != null)
+            {
+                _regionManager.RequestNavigate("ContentRegion", navigatePath);
+            }
+
         }
 
     }

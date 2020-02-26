@@ -8,7 +8,9 @@ using System.Globalization;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms.Integration;
 using WPFDemo.Common;
+using WinForm = System.Windows.Forms;
 
 namespace WPFDemo
 {
@@ -17,6 +19,13 @@ namespace WPFDemo
     /// </summary>
     public partial class App : PrismApplication
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            
+            System.Windows.Forms.Application.EnableVisualStyles();
+            WindowsFormsHost.EnableWindowsFormsInterop();
+            base.OnStartup(e);
+        }
         protected override Window CreateShell()
         {
             return Container.Resolve<MainWindow>();
@@ -37,6 +46,7 @@ namespace WPFDemo
         {
             base.ConfigureRegionAdapterMappings(regionAdapterMappings);
             regionAdapterMappings.RegisterMapping(typeof(StackPanel), Container.Resolve<StackPanelRegionAdapter>());
+            regionAdapterMappings.RegisterMapping(typeof(WindowsFormsHost), Container.Resolve<WinformRegionAdapter>());
         }
 
         protected override void ConfigureViewModelLocator()

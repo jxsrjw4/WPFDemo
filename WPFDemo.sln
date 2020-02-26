@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ViewModels", "ViewModels", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PluginDemo", "plugins\PluginDemo\PluginDemo.csproj", "{FFB576C0-8326-45B2-AD5B-C095564D1794}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinformWrapper", "plugins\WinformWrapper\WinformWrapper.csproj", "{A5566E0D-2651-4424-BF74-79C26BCD1940}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,12 +27,17 @@ Global
 		{FFB576C0-8326-45B2-AD5B-C095564D1794}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFB576C0-8326-45B2-AD5B-C095564D1794}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFB576C0-8326-45B2-AD5B-C095564D1794}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5566E0D-2651-4424-BF74-79C26BCD1940}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5566E0D-2651-4424-BF74-79C26BCD1940}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5566E0D-2651-4424-BF74-79C26BCD1940}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5566E0D-2651-4424-BF74-79C26BCD1940}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FFB576C0-8326-45B2-AD5B-C095564D1794} = {B563C470-A62D-48C3-BE3A-019CD5CFF8B7}
+		{A5566E0D-2651-4424-BF74-79C26BCD1940} = {B563C470-A62D-48C3-BE3A-019CD5CFF8B7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {25D82954-DEBD-48AB-8586-D638F70AC2DA}

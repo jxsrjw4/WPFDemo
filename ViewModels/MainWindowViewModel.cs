@@ -35,28 +35,6 @@ namespace WPFDemo
 
         }
 
-        private void ListViewMenu_SelectionChanged(int index)
-        {
-            string navigatePath = "";
-            switch (index)
-            {
-                case 0:
-                    navigatePath = "LoginView";
-                    break;
-                default:
-                    navigatePath = "DemoPlugin";
-                    break;
-            }
-
-            if (navigatePath != null)
-            {
-                _regionManager.RequestNavigate("ContentRegion", navigatePath);
-            }
-
-        }
-
-
-
 
         private void NagivateMenu(string navigatePath)
         {

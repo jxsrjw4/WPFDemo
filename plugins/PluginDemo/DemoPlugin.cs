@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace plugin_demo
+namespace WCFDemo.Plugins
 {
     public class DemoPlugin : IModule
     {
