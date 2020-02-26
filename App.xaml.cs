@@ -1,4 +1,5 @@
 ﻿using Prism.Ioc;
+using Prism.Logging;
 using Prism.Modularity;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -28,12 +29,17 @@ namespace WPFDemo
         }
         protected override Window CreateShell()
         {
-            return Container.Resolve<MainWindow>();
+            return new LoginView();
+            //return Container.Resolve<MainWindow>();
         }
-
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+            ConfigureApplicationEventHandlers();
+        }
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<LoginView>("LoginView");
+            //containerRegistry.RegisterSingleton<ILoggerFacade, Logger>();
         }
 
         protected override IModuleCatalog CreateModuleCatalog()
@@ -62,6 +68,13 @@ namespace WPFDemo
                 var viewModelName = String.Format(CultureInfo.InvariantCulture, "{0}{1}, {2}", viewName, suffix, viewAssemblyName);
                 return Type.GetType(viewModelName);
             });
+        }
+
+        private void ConfigureApplicationEventHandlers()
+        {
+            var handler = Container.Resolve<ExceptionHandler>();
+            AppDomain.CurrentDomain.UnhandledException += handler.UnhandledExceptionHandler;
+            Current.DispatcherUnhandledException += handler.DispatcherUnhandledExceptionHandler;
         }
     }
 }
