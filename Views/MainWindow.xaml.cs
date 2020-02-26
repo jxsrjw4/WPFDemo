@@ -21,10 +21,8 @@ namespace WPFDemo
     /// </summary>
     public partial class MainWindow : Window
     {
-        private IRegionManager _regionManager;
-        public MainWindow(IRegionManager regionManager)
+        public MainWindow()
         {
-            _regionManager = regionManager;
             InitializeComponent();
         }
 
@@ -40,6 +38,7 @@ namespace WPFDemo
 
         private void ListViewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            IRegionManager _regionManager = null;
             int index = ListViewMenu.SelectedIndex;
             string navigatePath = "";
             switch (index)

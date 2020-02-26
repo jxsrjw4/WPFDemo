@@ -12,17 +12,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="System.Drawing">
-      <HintPath>..\..\..\..\..\安装包\dnSpy-netcore-win64\System.Drawing.dll</HintPath>
-    </Reference>
     <Reference Include="System.Drawing.Common">
-      <HintPath>..\..\..\..\..\安装包\dnSpy-netcore-win64\System.Drawing.Common.dll</HintPath>
+      <HintPath>..\depency\System.Drawing.Common.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Forms">
-      <HintPath>C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\3.1.0\System.Windows.Forms.dll</HintPath>
+      <HintPath>..\depency\System.Windows.Forms.dll</HintPath>
     </Reference>
     <Reference Include="WindowsFormsIntegration">
-      <HintPath>..\..\..\..\..\安装包\dnSpy-netcore-win64\WindowsFormsIntegration.dll</HintPath>
+      <HintPath>..\depency\WindowsFormsIntegration.dll</HintPath>
     </Reference>
   </ItemGroup>
 

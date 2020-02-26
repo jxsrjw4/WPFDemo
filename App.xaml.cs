@@ -1,9 +1,11 @@
-﻿using Prism.Ioc;
+﻿using MaterialDesignThemes.Wpf;
+using Prism.Ioc;
 using Prism.Logging;
 using Prism.Modularity;
 using Prism.Mvvm;
 using Prism.Regions;
 using Prism.Unity;
+using Refit;
 using System;
 using System.Globalization;
 using System.Reflection;
@@ -11,6 +13,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms.Integration;
 using WPFDemo.Common;
+using WPFDemo.ServerInteraction;
 using WinForm = System.Windows.Forms;
 
 namespace WPFDemo
@@ -22,7 +25,7 @@ namespace WPFDemo
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            
+            ProcessController.CheckSingleton();
             System.Windows.Forms.Application.EnableVisualStyles();
             WindowsFormsHost.EnableWindowsFormsInterop();
             base.OnStartup(e);
@@ -39,7 +42,10 @@ namespace WPFDemo
         }
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            //containerRegistry.RegisterSingleton<ILoggerFacade, Logger>();
+            containerRegistry.RegisterSingleton<ILoggerFacade, Logger>();
+            containerRegistry.RegisterInstance<ISnackbarMessageQueue>(new SnackbarMessageQueue(TimeSpan.FromSeconds(2)));
+            containerRegistry.RegisterInstance(new ConfigureFile().Load());
+            containerRegistry.RegisterInstance(RestService.For<INonAuthenticationApi>(AcceleriderUrls.ApiBaseAddress));
         }
 
         protected override IModuleCatalog CreateModuleCatalog()

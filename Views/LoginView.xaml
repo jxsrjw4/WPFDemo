@@ -49,21 +49,23 @@
                     </Grid.ColumnDefinitions>
                     <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center" Margin="6"/>
                     <TextBox Margin="0,10"  Grid.Row="0" Grid.Column="1"  
-                             materialDesign:HintAssist.Hint="账号" Text="{Binding UserName}" 
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                             materialDesign:HintAssist.Hint="账号" Text="{Binding Account}" 
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"  FontSize="16" 
                              FontFamily="Microsoft Yahei Regular"/>
                     <materialDesign:PackIcon Grid.Column="0" Grid.Row="2" Kind="Key" VerticalAlignment="Center" Margin="6"/>
                     <PasswordBox Grid.Column="1" Grid.Row="2"  
+                                 Name="PasswordBox"
                                  Common:PasswordBoxHelper.Attach="True" 
                                  Common:PasswordBoxHelper.Password="{Binding Path=Password,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                                 Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="0,10" 
+                                 Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="0,10"  FontSize="16"
                                  materialDesign:HintAssist.Hint="密码" FontFamily="Microsoft Yahei Regular" />
                 </Grid>
             </StackPanel>
         </Grid>
         <Button Width="150" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,65" 
-                
-                Content="LOGIN" Command="{Binding LoginInCommand}"/>
+                Command="{Binding LoginInCommand}"
+                CommandParameter="{Binding ElementName=PasswordBox}"
+                Content="LOGIN" />
         <TextBlock Text="忘记密码？" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="30" Foreground="Gray" Cursor="Hand"/>
         <Button HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Click="Close_Click">
             <materialDesign:PackIcon Kind="Close"/>
