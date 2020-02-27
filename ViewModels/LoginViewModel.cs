@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using Unity;
+using WPFDemo.Infrastructure;
+using WPFDemo.Infrastructure.ServerInteraction;
 using WPFDemo.Models;
 using WPFDemo.ServerInteraction;
 
@@ -15,8 +17,6 @@ namespace WPFDemo
 {
     public class LoginViewModel: ViewModelBase
     {
-
-
         private readonly INonAuthenticationApi _nonAuthenticationApi;
         private SignUpArgs _signUpArgs;
         private string _account;

@@ -1,26 +1,35 @@
-﻿using Prism.Mvvm;
+﻿using Prism.Events;
+using Prism.Mvvm;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms.Integration;
+using WPFDemo.Infrastructure;
+using WPFDemo.Infrastructure.Models;
 
 namespace WinformWrapper.ViewModels
 {
-    public class BasePluginInfo
-    {
-        public string PluginVersion { get; set; }
-        public string PluginName { get; set; }
-        public string PluginDescription { get; set; }
-
-        public string PluginTypeName { get; set; }
-    }
-
     public class WinformPluginViewModel:BindableBase
     {
-        public BasePluginInfo plugininfo { get; set; }
-        public WinformPluginViewModel()
+        private IEventAggregator _ea;
+        private IRegionManager _regionManager;
+
+        public WinformPluginViewModel(IEventAggregator ea, IRegionManager regionManager)
         {
-           
+            _regionManager = regionManager;
+            _ea = ea;
+
+            _ea.GetEvent<PluginChangeEvent>().Subscribe(NagivateMenu);
+        }
+
+        private void NagivateMenu(BasePluginInfo plugin)
+        {
+            if (string.IsNullOrEmpty(plugin.PluginName))
+            {
+                _regionManager.RequestNavigate("ContentRegion", plugin.PluginName);
+            }
+
         }
     }
 }

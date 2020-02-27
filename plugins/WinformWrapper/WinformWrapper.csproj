@@ -12,6 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WPFDemo.Infrastructure\WPFDemo.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="System.Drawing.Common">
       <HintPath>..\depency\System.Drawing.Common.dll</HintPath>
     </Reference>

@@ -56,6 +56,7 @@ namespace WPFDemo
                 _regionManager.RequestNavigate("ContentRegion", navigatePath);
             }
 
+            
         }
 
     }

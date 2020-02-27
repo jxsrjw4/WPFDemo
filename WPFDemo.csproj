@@ -8,9 +8,13 @@
 
   <ItemGroup>
     <Compile Remove="plugins\**" />
+    <Compile Remove="ServerInteraction\**" />
     <EmbeddedResource Remove="plugins\**" />
+    <EmbeddedResource Remove="ServerInteraction\**" />
     <None Remove="plugins\**" />
+    <None Remove="ServerInteraction\**" />
     <Page Remove="plugins\**" />
+    <Page Remove="ServerInteraction\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,7 +47,10 @@
     <Folder Include="Common\Command\" />
     <Folder Include="Common\Interfaces\" />
     <Folder Include="Common\Extensions\" />
-    <Folder Include="ServerInteraction\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="plugins\WPFDemo.Infrastructure\WPFDemo.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
