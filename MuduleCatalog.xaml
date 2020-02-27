@@ -1,0 +1,10 @@
+﻿<Modularity:ModuleCatalog xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:Modularity="clr-namespace:Prism.Modularity;assembly=Prism.Wpf"
+                         >
+    <Modularity:ModuleInfo Ref="file://XianFeng.Client.Modules.Notify.dll"
+                           ModuleName="NotifyModule"
+                           InitializationMode="WhenAvailable"
+                           ModuleType="XianFeng.Client.Modules.Notify.NotifyModule, XianFeng.Client.Modules.Notify" />
+    
+</Modularity:ModuleCatalog>

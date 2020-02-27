@@ -3,6 +3,7 @@ using System.Windows.Threading;
 using Prism.Events;
 using Prism.Logging;
 using Prism.Mvvm;
+using Prism.Regions;
 using Unity;
 
 namespace WPFDemo
@@ -16,6 +17,7 @@ namespace WPFDemo
             Container = container;
             EventAggregator = container.Resolve<IEventAggregator>();
             Logger = container.Resolve<ILoggerFacade>();
+            RegionManager = container.Resolve<IRegionManager>();
         }
 
         public Dispatcher Dispatcher { get; set; }
@@ -26,7 +28,9 @@ namespace WPFDemo
 
         protected ILoggerFacade Logger { get; }
 
-        public IAcceleriderUser AcceleriderUser => _acceleriderUser ?? (_acceleriderUser = Container.Resolve<IAcceleriderUser>());
+        protected IRegionManager RegionManager { get; }
+
+        //public IAcceleriderUser AcceleriderUser => _acceleriderUser ?? (_acceleriderUser = Container.Resolve<IAcceleriderUser>());
 
         protected virtual void Invoke(Action action) => Dispatcher.Invoke(action);
     }

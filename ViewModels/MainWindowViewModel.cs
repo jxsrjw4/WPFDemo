@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using Unity;
 using WPFDemo.Common;
 using WPFDemo.Infrastructure;
 using WPFDemo.Infrastructure.Models;
@@ -13,7 +14,7 @@ using WPFDemo.Models;
 
 namespace WPFDemo
 {
-    public class MainWindowViewModel: BindableBase
+    public class MainWindowViewModel: ViewModelBase
     {
         //菜单
         private ObservableCollection<MenuItem> _menuitems = new ObservableCollection<MenuItem>();
@@ -23,37 +24,32 @@ namespace WPFDemo
             set { SetProperty(ref _menuitems, value); }
         }
 
-        private IRegionManager _regionManager;
-        private IEventAggregator _ea;
+        public DelegateCommand<MenuItem> NavigateCommand { get; private set; }
+        public DelegateCommand<MenuItem> MenuItemChangedCommand { get; private set; }
 
-        public DelegateCommand<string> NavigateCommand { get; private set; }
-        public DelegateCommand<int> MenuItemChangedCommand { get; private set; }
-
-        public MainWindowViewModel(IRegionManager regionManager, IEventAggregator ea)
+        public MainWindowViewModel(IUnityContainer container,IRegionManager regionManager):base(container)
         {
-            _regionManager = regionManager;
-            _ea = ea;
+            NavigateCommand = new DelegateCommand<MenuItem>(NagivateMenu);
+            MenuItemChangedCommand = new DelegateCommand<MenuItem>(OnPluginChanged);
+            _menuitems.Add(new MenuItem { MenuItemName="主页", MenuItemIcon="Home", pluginInfo = new BasePluginInfo { PluginTypeName="PluginDemoView",PluginName= "DemoPlugin" } });
+            _menuitems.Add(new MenuItem { MenuItemName = "用户", MenuItemIcon = "User", pluginInfo = new BasePluginInfo { PluginTypeName = "WinformPluginWrapper", PluginName= "WinformPluginWrapper" } });
 
-
-            NavigateCommand = new DelegateCommand<string>(NagivateMenu);
-            //MenuItemChangedCommand = new DelegateCommand<int>(ListViewMenu_SelectionChanged);
-            _menuitems.Add(new MenuItem { MenuItemName="主页", MenuItemIcon="Home", pluginInfo = new BasePluginInfo { PluginTypeName="PluginDemoView"} });
-            _menuitems.Add(new MenuItem { MenuItemName = "用户", MenuItemIcon = "User", pluginInfo = new BasePluginInfo { PluginTypeName = "PluginDemoView" } });
-
-        }
-
-        private void NagivateMenu(string path)
-        {
-            if (string.IsNullOrEmpty(path))
-            {
-                _regionManager.RequestNavigate("ContentRegion", path);
             }
+
+
+        private void NagivateMenu(MenuItem menu)
+        {
+            var parameters = new NavigationParameters();
+            parameters.Add("pluginInfo", menu.pluginInfo);
+
+            if (menu != null)
+                RegionManager.RequestNavigate("ContentRegion", menu.pluginInfo.PluginName);
         }
 
 
-        private void OnPluginChanged(BasePluginInfo plugin)
+        private void OnPluginChanged(MenuItem menu)
         {
-            _ea.GetEvent<PluginChangeEvent>().Publish(plugin);
+            EventAggregator.GetEvent<PluginChangeEvent>().Publish(menu.pluginInfo);
         }
     }
 }

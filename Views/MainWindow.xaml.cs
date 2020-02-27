@@ -35,29 +35,5 @@ namespace WPFDemo
         {
             DragMove();
         }
-
-        private void ListViewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            IRegionManager _regionManager = null;
-            int index = ListViewMenu.SelectedIndex;
-            string navigatePath = "";
-            switch (index)
-            {
-                case 0:
-                    navigatePath = "WinformPluginWrapper";
-                    break;
-                default:
-                    navigatePath = "DemoPlugin";
-                    break;
-            }
-
-            if (navigatePath != null)
-            {
-                _regionManager.RequestNavigate("ContentRegion", navigatePath);
-            }
-
-            
-        }
-
     }
 }

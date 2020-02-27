@@ -50,6 +50,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="plugins\PluginDemo\PluginDemo.csproj" />
+    <ProjectReference Include="plugins\WinformWrapper\WinformWrapper.csproj" />
     <ProjectReference Include="plugins\WPFDemo.Infrastructure\WPFDemo.Infrastructure.csproj" />
   </ItemGroup>
 

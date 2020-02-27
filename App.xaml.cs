@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms.Integration;
+using WCFDemo.Plugins;
 using WPFDemo.Common;
 using WPFDemo.ServerInteraction;
 using WinForm = System.Windows.Forms;
@@ -50,8 +51,24 @@ namespace WPFDemo
 
         protected override IModuleCatalog CreateModuleCatalog()
         {
+            //模块权限控制
+            return ModuleCatalog.CreateFromXaml(new Uri("ModuleCatalog.xaml", UriKind.Relative));
             //通过目录加载插件
             return new DirectoryModuleCatalog() { ModulePath = @".\PluginCache" };
+        }
+
+        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+        {
+            var moduleAType = typeof(DemoPlugin);
+            moduleCatalog.AddModule(new ModuleInfo()
+            {
+                ModuleName = moduleAType.Name,
+                ModuleType = moduleAType.AssemblyQualifiedName,
+                InitializationMode = InitializationMode.OnDemand
+            });
+
+            //模块权限控制
+            //ModuleCatalog.CreateFromXaml("");
         }
 
         protected override void ConfigureRegionAdapterMappings(RegionAdapterMappings regionAdapterMappings)

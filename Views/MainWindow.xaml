@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:prism="http://prismlibrary.com/"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:winForms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         mc:Ignorable="d"
@@ -64,7 +65,7 @@
         <Grid Width="250" HorizontalAlignment="Left" Background="#FF222222">
             <Image Source="https://img.dotnet9.com/logo-head.png" VerticalAlignment="Top"/>
             <Image Source="https://img.dotnet9.com/logo-foot.png" VerticalAlignment="Bottom"/>
-            <ListView x:Name="ListViewMenu" ItemsSource="{Binding MenuItems}" Margin="0 100" Foreground="LightGray" FontSize="18" SelectedIndex="0" SelectionChanged="ListViewMenu_SelectionChanged">
+            <ListView x:Name="_ListViewMenu" ItemsSource="{Binding MenuItems}" Margin="0 100" Foreground="LightGray" FontSize="18" SelectedIndex="0"  >
                 <ListView.ItemTemplate>
                     <HierarchicalDataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -73,7 +74,11 @@
                         </StackPanel>
                     </HierarchicalDataTemplate>
                 </ListView.ItemTemplate>
-
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <prism:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="{Binding SelectedItem, ElementName=_ListViewMenu}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </ListView>
 
         </Grid>

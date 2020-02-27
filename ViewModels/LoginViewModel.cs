@@ -54,6 +54,8 @@ namespace WPFDemo
         {
             EventAggregator.GetEvent<MainWindowLoadingEvent>().Publish(true);
 
+            ShellSwitcher.Switch<LoginView, MainWindow>();
+            return;
             if (!await AuthenticateAsync(username, passwordMd5))
             {
                 EventAggregator.GetEvent<MainWindowLoadingEvent>().Publish(false);
@@ -69,7 +71,6 @@ namespace WPFDemo
             ConfigureFile.SetValue(ConfigureKeys.AutoSignIn, false);
 
             // Launches main window and closes itself.
-            ShellSwitcher.Switch<LoginView, MainWindow>();
         }
 
         private async Task<bool> AuthenticateAsync(string username, string passwordMd5)
