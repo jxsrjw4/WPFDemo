@@ -1,16 +1,12 @@
-﻿using Prism.Commands;
-using Prism.Events;
-using Prism.Mvvm;
+﻿
+using Prism.Regions;
 using Refit;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using Unity;
 using WPFDemo.Infrastructure;
 using WPFDemo.Infrastructure.ServerInteraction;
-using WPFDemo.Models;
 using WPFDemo.ServerInteraction;
 
 namespace WPFDemo
@@ -29,10 +25,12 @@ namespace WPFDemo
             set => SetProperty(ref _account, value);
         }
 
+        public IRegionManager _regionManager;
         public RelayCommand<PasswordBox> LoginInCommand { get; private set; }
 
-        public LoginViewModel(IUnityContainer container):base(container)
+        public LoginViewModel(IUnityContainer container,IRegionManager regionManager):base(container)
         {
+            _regionManager = regionManager;
             _nonAuthenticationApi = Container.Resolve<INonAuthenticationApi>();
             ConfigureFile = Container.Resolve<IConfigureFile>();
             LoginInCommand = new RelayCommand<PasswordBox>(LoginIn, passwordBox => CanSignIn(Account, passwordBox.Password));
@@ -54,7 +52,7 @@ namespace WPFDemo
         {
             EventAggregator.GetEvent<MainWindowLoadingEvent>().Publish(true);
 
-            ShellSwitcher.Switch<LoginView, MainWindow>();
+            ShellSwitcher.Switch<LoginView, MainWindow>(_regionManager);
             return;
             if (!await AuthenticateAsync(username, passwordMd5))
             {

@@ -7,11 +7,11 @@ namespace WPFDemo.Infrastructure.ServerInteraction
 {
     public interface IPlugin
     {
-        public void PreViewCommand(string command);
+        //public void PreViewCommand(string command);
 
-        public void SendToStatusBar(string Message);
-        public void ChangeProgressBar(int Maximum, int Value);
-        public DataSet GetDataSetWithSQLString(string SQLString);
+        //public void SendToStatusBar(string Message);
+        //public void ChangeProgressBar(int Maximum, int Value);
+        //public DataSet GetDataSetWithSQLString(string SQLString);
 
     }
 }

@@ -4,11 +4,12 @@ using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using WPFDemo.Infrastructure;
 
-namespace Plugin.ViewModels
+namespace DemoPlugin.ViewModels
 {
     //Plugin.ViewModels.DemoPluginViewModel
-    public class  DemoPluginViewModel: BindableBase,INavigationAware, IRegionMemberLifetime
+    public class  DemoPluginViewModel: BindableBase,INavigationAware, IRegionMemberLifetime,IViewLoadedAndUnloadedAware
     {
         private string _title = "Prism Unity Application";
 
@@ -63,6 +64,16 @@ namespace Plugin.ViewModels
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
             
+        }
+
+        public void OnLoaded()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnUnloaded()
+        {
+            throw new NotImplementedException();
         }
     }
 }

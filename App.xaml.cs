@@ -12,8 +12,8 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms.Integration;
-using WCFDemo.Plugins;
 using WPFDemo.Common;
+using WPFDemo.Infrastructure;
 using WPFDemo.ServerInteraction;
 using WinForm = System.Windows.Forms;
 
@@ -30,6 +30,7 @@ namespace WPFDemo
             System.Windows.Forms.Application.EnableVisualStyles();
             WindowsFormsHost.EnableWindowsFormsInterop();
             base.OnStartup(e);
+
         }
         protected override Window CreateShell()
         {
@@ -52,20 +53,20 @@ namespace WPFDemo
         protected override IModuleCatalog CreateModuleCatalog()
         {
             //模块权限控制
-            return ModuleCatalog.CreateFromXaml(new Uri("ModuleCatalog.xaml", UriKind.Relative));
+            //return ModuleCatalog.CreateFromXaml(new Uri("ModuleCatalog.xaml", UriKind.Relative));
             //通过目录加载插件
-            return new DirectoryModuleCatalog() { ModulePath = @".\PluginCache" };
+            return new DirectoryModuleCatalog() { ModulePath = @".\Modules" };
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
-            var moduleAType = typeof(DemoPlugin);
-            moduleCatalog.AddModule(new ModuleInfo()
-            {
-                ModuleName = moduleAType.Name,
-                ModuleType = moduleAType.AssemblyQualifiedName,
-                InitializationMode = InitializationMode.OnDemand
-            });
+            //var moduleAType = typeof(DemoPlugin);
+            //moduleCatalog.AddModule(new ModuleInfo()
+            //{
+            //    ModuleName = moduleAType.Name,
+            //    ModuleType = moduleAType.AssemblyQualifiedName,
+            //    InitializationMode = InitializationMode.OnDemand
+            //});
 
             //模块权限控制
             //ModuleCatalog.CreateFromXaml("");
@@ -80,6 +81,8 @@ namespace WPFDemo
 
         protected override void ConfigureViewModelLocator()
         {
+            //ViewModelLocationProvider.SetDefaultViewModelFactory(new ViewModelResolver(() => Container).UseDefaultConfigure().ResolveViewModelForView);
+
             base.ConfigureViewModelLocator();
 
             ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver((viewType) =>

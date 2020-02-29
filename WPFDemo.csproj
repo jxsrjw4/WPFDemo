@@ -4,17 +4,45 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>.\Build\Debug</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Common\Command\**" />
+    <Compile Remove="Common\Extensions\**" />
+    <Compile Remove="Common\Interfaces\**" />
     <Compile Remove="plugins\**" />
     <Compile Remove="ServerInteraction\**" />
+    <EmbeddedResource Remove="Common\Command\**" />
+    <EmbeddedResource Remove="Common\Extensions\**" />
+    <EmbeddedResource Remove="Common\Interfaces\**" />
     <EmbeddedResource Remove="plugins\**" />
     <EmbeddedResource Remove="ServerInteraction\**" />
+    <None Remove="Common\Command\**" />
+    <None Remove="Common\Extensions\**" />
+    <None Remove="Common\Interfaces\**" />
     <None Remove="plugins\**" />
     <None Remove="ServerInteraction\**" />
+    <Page Remove="Common\Command\**" />
+    <Page Remove="Common\Extensions\**" />
+    <Page Remove="Common\Interfaces\**" />
     <Page Remove="plugins\**" />
     <Page Remove="ServerInteraction\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="MuduleCatalog.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="MuduleCatalog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -44,14 +72,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Command\" />
-    <Folder Include="Common\Interfaces\" />
-    <Folder Include="Common\Extensions\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="plugins\PluginDemo\PluginDemo.csproj" />
-    <ProjectReference Include="plugins\WinformWrapper\WinformWrapper.csproj" />
     <ProjectReference Include="plugins\WPFDemo.Infrastructure\WPFDemo.Infrastructure.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,5 @@
-﻿using Prism.Ioc;
+﻿using Plugin.Views;
+using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
 using System;
@@ -6,7 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using WinformWrapper.Views;
 
-namespace WCFDemo.Plugins
+namespace WCFDemo.WinformWrapper
 {
 	public class WinformWrapper : IModule
 	{
@@ -18,7 +19,8 @@ namespace WCFDemo.Plugins
 
 		public void RegisterTypes(IContainerRegistry containerRegistry)
 		{
-			containerRegistry.RegisterForNavigation<WinformPluginView>("WinformPluginWrapper");
+			containerRegistry.RegisterForNavigation<WinformPluginView>("WinformPlugin");
+			containerRegistry.RegisterForNavigation<DemoView>("DemoView");
 		}
 
 	}

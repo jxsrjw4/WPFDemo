@@ -1,20 +1,17 @@
 ﻿using Prism.Commands;
 using Prism.Events;
+using Prism.Modularity;
 using Prism.Mvvm;
 using Prism.Regions;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
+using System.Collections.Specialized;
 using Unity;
-using WPFDemo.Common;
 using WPFDemo.Infrastructure;
 using WPFDemo.Infrastructure.Models;
-using WPFDemo.Models;
 
 namespace WPFDemo
 {
-    public class MainWindowViewModel: ViewModelBase
+    public class MainWindowViewModel: ViewModelBase, IViewLoadedAndUnloadedAware
     {
         //菜单
         private ObservableCollection<MenuItem> _menuitems = new ObservableCollection<MenuItem>();
@@ -24,32 +21,70 @@ namespace WPFDemo
             set { SetProperty(ref _menuitems, value); }
         }
 
+        public IRegionManager _regionManager;
+        private IModuleCatalog _moduleCatalog;
         public DelegateCommand<MenuItem> NavigateCommand { get; private set; }
         public DelegateCommand<MenuItem> MenuItemChangedCommand { get; private set; }
 
-        public MainWindowViewModel(IUnityContainer container,IRegionManager regionManager):base(container)
+        public MainWindowViewModel(IUnityContainer container, IRegionManager regionManager) :base(container)
         {
+            _regionManager = regionManager;
             NavigateCommand = new DelegateCommand<MenuItem>(NagivateMenu);
-            MenuItemChangedCommand = new DelegateCommand<MenuItem>(OnPluginChanged);
+            //MenuItemChangedCommand = new DelegateCommand<MenuItem>(OnPluginChanged);
             _menuitems.Add(new MenuItem { MenuItemName="主页", MenuItemIcon="Home", pluginInfo = new BasePluginInfo { PluginTypeName="PluginDemoView",PluginName= "DemoPlugin" } });
-            _menuitems.Add(new MenuItem { MenuItemName = "用户", MenuItemIcon = "User", pluginInfo = new BasePluginInfo { PluginTypeName = "WinformPluginWrapper", PluginName= "WinformPluginWrapper" } });
+            _menuitems.Add(new MenuItem { MenuItemName = "用户", MenuItemIcon = "User", pluginInfo = new BasePluginInfo { PluginTypeName = "WinformPluginWrapper", PluginName= "DemoView" } });
+            _menuitems.Add(new MenuItem { MenuItemName = "设置", MenuItemIcon = "Setting", pluginInfo = new BasePluginInfo { PluginTypeName = "WinformPluginWrapper", PluginName = "WinformPlugin" } });
 
-            }
+        }
 
 
         private void NagivateMenu(MenuItem menu)
         {
+            //_moduleCatalog.AddModule(new ModuleInfo()
+            //{
+            //    ModuleName = "WCFDemo.Plugins.DemoPlugin",
+            //    ModuleType = "PluginDemo.dll",
+            //    InitializationMode = InitializationMode.OnDemand
+            //});
+            //var plugin = Container.Resolve<IPlugin>("DemoPlugin");
+            //IRegion region = _regionManager.Regions["WinfromWrapperRegion"];
+            //region.Add(plugin);
+
             var parameters = new NavigationParameters();
             parameters.Add("pluginInfo", menu.pluginInfo);
 
             if (menu != null)
-                RegionManager.RequestNavigate("ContentRegion", menu.pluginInfo.PluginName);
+            {
+                _regionManager.RequestNavigate("WinfromWrapperRegion", menu.pluginInfo.PluginName, NavigationCompleted);
+                EventAggregator.GetEvent<PluginChangeEvent>().Publish(menu.pluginInfo);
+            }
+
         }
 
-
-        private void OnPluginChanged(MenuItem menu)
+        private void NavigationCompleted(NavigationResult result)
         {
-            EventAggregator.GetEvent<PluginChangeEvent>().Publish(menu.pluginInfo);
+            
+        }
+
+        public void OnLoaded()
+        {
+            //    var region = _regionManager.Regions["ContentRegion"];
+            //    region.ActiveViews.CollectionChanged += OnActiveViewsChanged;
+
+            //GlobalMessageQueue.Enqueue(UiStrings.Message_Welcome);
+
+            _regionManager.RequestNavigate("WinfromWrapperRegion", "DefaultDashboard", NavigationCompleted);
+        }
+
+        public void OnUnloaded()
+        {
+        }
+
+        private void OnActiveViewsChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action != NotifyCollectionChangedAction.Add) return;
+
         }
     }
+
 }

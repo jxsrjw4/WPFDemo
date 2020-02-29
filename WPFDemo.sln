@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PluginDemo", "plugins\Plugi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinformWrapper", "plugins\WinformWrapper\WinformWrapper.csproj", "{A5566E0D-2651-4424-BF74-79C26BCD1940}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFDemo.Infrastructure", "plugins\WPFDemo.Infrastructure\WPFDemo.Infrastructure.csproj", "{56F806C9-870C-43C7-8C5B-27A01BF72D26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFDemo.Infrastructure", "plugins\WPFDemo.Infrastructure\WPFDemo.Infrastructure.csproj", "{56F806C9-870C-43C7-8C5B-27A01BF72D26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

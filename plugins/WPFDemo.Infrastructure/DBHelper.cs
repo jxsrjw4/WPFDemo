@@ -5,7 +5,6 @@ using System.Text;
 
 namespace WPFDemo.Infrastructure
 {
-
     public class DBHelper
     {
         private SqlSugarClient _instance = null;

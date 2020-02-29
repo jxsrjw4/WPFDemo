@@ -20,9 +20,6 @@ namespace WinformWrapper.Views
         public WinformPluginView()
         {
             InitializeComponent();
-            WindowsFormsHost host = new WindowsFormsHost();
-            Wrapper.Content = host;
-            host.Child = CreateUserControl("namespace");
         }
 
         private winform.UserControl CreateUserControl(string typeName)

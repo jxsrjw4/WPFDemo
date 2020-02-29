@@ -1,8 +1,8 @@
 
-
 using System.Windows.Controls;
+using WPFDemo.Infrastructure.ServerInteraction;
 
-namespace Plugin.Views
+namespace DemoPlugin.Views
 {
     /// <summary>
     /// Interaction logic for UserControl1.xaml

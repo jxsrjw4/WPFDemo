@@ -54,12 +54,8 @@
         </StackPanel>
 
         <Grid Margin="250 55 0 0">
-            <WindowsFormsHost prism:RegionManager.RegionName="WinfromWrapperRegion" >
-                
-            </WindowsFormsHost>
-            <TabControl Name="PluginArea" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                        prism:RegionManager.RegionName="ContentRegion" 
-                        prism:RegionManager.RegionContext="{Binding SelectedItem, ElementName=_listOfMenu}"/>
+            <TabControl 
+                        prism:RegionManager.RegionName="WinfromWrapperRegion" />
             
         </Grid>
         <Grid Width="250" HorizontalAlignment="Left" Background="#FF222222">

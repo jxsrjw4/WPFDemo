@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WPFDemo.Infrastructure;
 
-namespace WPFDemo
+namespace WPFDemo.Infrastructure
 {
     internal class AcceleriderUser : IAcceleriderUser
     {

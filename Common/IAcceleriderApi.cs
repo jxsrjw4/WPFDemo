@@ -1,13 +1,13 @@
 ﻿using System.Threading.Tasks;
 using Refit;
 
-namespace WPFDemo.Models
+namespace WPFDemo.Infrastructure
 {
     [Headers(
         "User-Agent: Accelerider.Windows.Wpf: v1.0.0-pre",
         "Accept-Language: en-US",
         "Authorization: Bearer")]
-    internal interface IAcceleriderApi
+     interface IAcceleriderApi
     {
         // Accelerider account functions ------------------------------------------------
         [Get("/users/current")]

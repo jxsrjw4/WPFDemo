@@ -1,15 +1,18 @@
-﻿using System.Linq;
+﻿using Prism.Regions;
+using System.Linq;
 using System.Windows;
 
 namespace WPFDemo
 {
     public static class ShellSwitcher
     {
-        public static void Show<T>(T window = null) where T : Window, new()
+        public static Window Show<T>(T window = null) where T : Window, new()
         {
             var shell = Application.Current.MainWindow = window ?? new T();
             shell.Loaded += ProcessController.OnWindowLoaded;
             shell.Show();
+
+            return shell;
         }
 
         public static void Close<T>() where T : Window
@@ -18,12 +21,17 @@ namespace WPFDemo
             shell?.Close();
         }
 
-        public static void Switch<TClose, TShow>()
+        public static void Switch<TClose, TShow>(IRegionManager regionManager)
             where TShow : Window, new()
             where TClose : Window
         {
-            Show<TShow>();
+            var shell = Show<TShow>();
+            //多个shell需要共享region manager
+            RegionManager.SetRegionManager(shell, regionManager);
+            RegionManager.UpdateRegions();
             Close<TClose>();
+
+
         }
     }
 }
