@@ -4,12 +4,13 @@ using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Unity;
 using WPFDemo.Infrastructure;
 
 namespace DemoPlugin.ViewModels
 {
     //Plugin.ViewModels.DemoPluginViewModel
-    public class  DemoPluginViewModel: BindableBase,INavigationAware, IRegionMemberLifetime,IViewLoadedAndUnloadedAware
+    public class  DemoPluginViewModel: PluginViewModelBase,INavigationAware
     {
         private string _title = "Prism Unity Application";
 
@@ -21,16 +22,7 @@ namespace DemoPlugin.ViewModels
 
         public DelegateCommand ExecuteDelegateCommand { get; private set; }
 
-        //是否
-        public bool KeepAlive 
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        public DemoPluginViewModel()
+        public DemoPluginViewModel(IUnityContainer container):base(container)
         {
             ExecuteDelegateCommand = new DelegateCommand(Execute, CanExecute);
 
@@ -64,16 +56,6 @@ namespace DemoPlugin.ViewModels
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
             
-        }
-
-        public void OnLoaded()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnUnloaded()
-        {
-            throw new NotImplementedException();
         }
     }
 }

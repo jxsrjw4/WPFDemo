@@ -11,10 +11,8 @@ using WPFDemo.Infrastructure.Models;
 
 namespace WinformWrapper.ViewModels
 {
-    public class WinformPluginViewModel : ViewModelBase,INavigationAware, IRegionMemberLifetime
+    public class WinformPluginViewModel : PluginViewModelBase,INavigationAware
     {
-        private IRegionManager _regionManager;
-
         private string _title = "WinformPluginView";
 
         public string Title
@@ -23,13 +21,9 @@ namespace WinformWrapper.ViewModels
             set { SetProperty(ref _title, value); }
         }
 
-        //默认都用缓存，除非插件更新
-        public bool KeepAlive => true;
 
-        public WinformPluginViewModel(IUnityContainer container,  IRegionManager regionManager):base(container)
+        public WinformPluginViewModel(IUnityContainer container):base(container)
         {
-            _regionManager = regionManager;
-
             EventAggregator.GetEvent<PluginChangeEvent>().Subscribe(NagivateMenu);
         }
 
@@ -37,7 +31,7 @@ namespace WinformWrapper.ViewModels
         {
             if (string.IsNullOrEmpty(plugin.PluginName))
             {
-                _regionManager.RequestNavigate("ContentRegion", plugin.PluginName);
+                RegionManager.RequestNavigate("ContentRegion", plugin.PluginName);
             }
 
         }

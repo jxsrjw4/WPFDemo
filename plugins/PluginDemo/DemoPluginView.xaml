@@ -7,7 +7,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
-              d:DesignWidth="500" d:DesignHeight="500">
+              d:DesignWidth="500" d:DesignHeight="500" Cursor="Hand">
     <Grid>
 
         <Image Source="https://img.dotnet9.com/20200124165746.png"/>

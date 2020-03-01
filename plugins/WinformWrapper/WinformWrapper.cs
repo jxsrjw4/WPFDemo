@@ -19,8 +19,8 @@ namespace WCFDemo.WinformWrapper
 
 		public void RegisterTypes(IContainerRegistry containerRegistry)
 		{
-			containerRegistry.RegisterForNavigation<WinformPluginView>("WinformPlugin");
-			containerRegistry.RegisterForNavigation<DemoView>("DemoView");
+			containerRegistry.RegisterForNavigation<WinformPluginView>();
+			containerRegistry.RegisterForNavigation<DemoView>();
 		}
 
 	}

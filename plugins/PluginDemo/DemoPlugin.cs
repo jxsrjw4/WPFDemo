@@ -14,7 +14,7 @@ namespace DemoPlugin
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<DemoPluginView>("DemoPlugin");
+            containerRegistry.RegisterForNavigation<DemoPluginView>();
         }
         
     }

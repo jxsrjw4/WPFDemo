@@ -6,78 +6,100 @@
         xmlns:prism="http://prismlibrary.com/"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:winForms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         mc:Ignorable="d"
-        xmlns:hc="https://handyorg.github.io/handycontrol"
-        xmlns:controls="clr-namespace:HandyControl.Controls;assembly=HandyControl"
+        xmlns:uitemplate="clr-namespace:WPFDemo.UI.Template"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        WindowStartupLocation="CenterScreen"  ResizeMode="NoResize" WindowStyle="None" 
-        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        WindowStartupLocation="CenterScreen"  ResizeMode="CanResizeWithGrip" WindowStyle="None" 
+        MouseLeftButtonDown="Window_MouseLeftButtonDown" 
         Title="{Binding UserInfo}" Height="600" Width="1024">
-    
+
     <Window.Resources>
-        <Style TargetType="TabItem">
-            <Setter Property="Header" Value="{Binding DataContext.Title}" />
-        </Style>
         <Style x:Key="MenuItemStyle" TargetType="{x:Type MenuItem}">
             <Setter Property="Command" Value="{Binding OnSelected}" />
         </Style>
+
+        <Storyboard x:Key="MenuOpen">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="60"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="200"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="MenuClose">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="200"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="60"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
     </Window.Resources>
-    
-    <Grid Background="#FFEEEEEE" >
-        <StackPanel VerticalAlignment="Top">
-            <Grid Background="#FF0069C0" Height="10"/>
-            <Grid Margin="5">
-                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                    <TextBlock Text="IT技术支持" VerticalAlignment="Center" FontSize="20" FontFamily="Champagne &amp; Limousines" Margin="20 0"></TextBlock>
-                    <Button Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Foreground="Gray">
-                        <materialDesign:PackIcon Kind="Wechat"/>
-                    </Button>
-                    <Button Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Foreground="Gray">
-                        <materialDesign:PackIcon Kind="Qqchat"/>
-                    </Button>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 0 ">
-                    <Button Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Foreground="Gray">
-                        <materialDesign:PackIcon Kind="BellOutline"/>
-                    </Button>
-                    <Button Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Foreground="Gray">
-                        <materialDesign:PackIcon Kind="Settings"/>
-                    </Button>
-                    <Button Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Foreground="Gray" Cursor="Hand" Click="ButtonClose_Click">
-                        <materialDesign:PackIcon Kind="Close"/>
-                    </Button>
-                    
-                </StackPanel>
-            </Grid>
-            
-        </StackPanel>
 
-        <Grid Margin="250 55 0 0">
-            <TabControl 
-                        prism:RegionManager.RegionName="WinfromWrapperRegion" />
-            
-        </Grid>
-        <Grid Width="250" HorizontalAlignment="Left" Background="#FF222222">
-            <Image Source="https://img.dotnet9.com/logo-head.png" VerticalAlignment="Top"/>
-            <Image Source="https://img.dotnet9.com/logo-foot.png" VerticalAlignment="Bottom"/>
-            <ListView x:Name="_ListViewMenu" ItemsSource="{Binding MenuItems}" Margin="0 100" Foreground="LightGray" FontSize="18" SelectedIndex="0"  >
-                <ListView.ItemTemplate>
-                    <HierarchicalDataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="{Binding MenuItemIcon}" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
-                            <TextBlock Text="{Binding MenuItemName}" FontSize="17" VerticalAlignment="Center" Margin="20 0" />
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonOpenMenu">
+            <BeginStoryboard Storyboard="{StaticResource MenuOpen}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonCloseMenu">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}"/>
+        </EventTrigger>
+    </Window.Triggers>
+
+
+    <Grid >
+        <materialDesign:DialogHost Identifier="RootDialog" Margin="1">
+            <materialDesign:DrawerHost>
+                <Grid Margin="4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid x:Name="GridTitle" Height="60" VerticalAlignment="Top" Background="#FF222222" >
+                        <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right" >
+                            <Image Source="https://img.dotnet9.com/logo-foot.png" HorizontalAlignment="Left"/>
+
+                            <materialDesign:PopupBox Foreground="White" HorizontalAlignment="Right" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
+                                <StackPanel Width="150">
+                                    <Button Content="账号"/>
+                                    <Button Content="设置"/>
+                                    <Button Content="帮助"/>
+                                    <Separator/>
+                                    <Button x:Name="ButtonPopUpLogout" Content="Logout" Click="ButtonClose_Click"/>
+                                </StackPanel>
+                            </materialDesign:PopupBox>
+                            <uitemplate:MainNotice HorizontalAlignment="Right"/>
                         </StackPanel>
-                    </HierarchicalDataTemplate>
-                </ListView.ItemTemplate>
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <prism:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="{Binding SelectedItem, ElementName=_ListViewMenu}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </ListView>
 
-        </Grid>
+                    </Grid>
+                    <DockPanel Grid.Row="1"  Grid.ColumnSpan="2" LastChildFill="True" >
+                        <Grid x:Name="GridMenu" Grid.Column="0" Width="50" HorizontalAlignment="Left" Background="#FF222222">
+                            <ListView x:Name="_ListViewMenu" ItemsSource="{Binding MenuItems}"  Foreground="LightGray" FontSize="18" SelectedIndex="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
+                                <ListView.ItemTemplate>
+                                    <HierarchicalDataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="{Binding MenuItemIcon}" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
+                                            <TextBlock Text="{Binding MenuItemName}" FontSize="17" VerticalAlignment="Center" Margin="20 0" />
+                                        </StackPanel>
+                                    </HierarchicalDataTemplate>
+                                </ListView.ItemTemplate>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <prism:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="{Binding SelectedItem, ElementName=_ListViewMenu}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ListView>
+                            <Button x:Name="ButtonCloseMenu" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{x:Null}"  VerticalAlignment="Bottom"  Visibility="Collapsed" Click="ButtonCloseMenu_Click">
+                                <materialDesign:PackIcon Kind="ArrowLeft" Foreground="White" Width="25" Height="25"/>
+                            </Button>
+                            <Button x:Name="ButtonOpenMenu" HorizontalAlignment="Left"  Background="{x:Null}" BorderBrush="{x:Null}"  VerticalAlignment="Bottom"  Click="ButtonOpenMenu_Click">
+                                <materialDesign:PackIcon Kind="Menu" Foreground="White" Width="25" Height="25"/>
+                            </Button>
+                        </Grid>
 
+                        <uitemplate:MainTabControl  prism:RegionManager.RegionName="WinfromWrapperRegion" />
+                            
+                    </DockPanel>
+                        
+                </Grid>
+
+
+            </materialDesign:DrawerHost>
+        </materialDesign:DialogHost>
     </Grid>
 </Window>

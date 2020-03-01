@@ -3,6 +3,7 @@ using Prism.Events;
 using Prism.Modularity;
 using Prism.Mvvm;
 using Prism.Regions;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using Unity;
@@ -11,7 +12,7 @@ using WPFDemo.Infrastructure.Models;
 
 namespace WPFDemo
 {
-    public class MainWindowViewModel: ViewModelBase, IViewLoadedAndUnloadedAware
+    public class MainWindowViewModel: PluginViewModelBase
     {
         //菜单
         private ObservableCollection<MenuItem> _menuitems = new ObservableCollection<MenuItem>();
@@ -21,19 +22,17 @@ namespace WPFDemo
             set { SetProperty(ref _menuitems, value); }
         }
 
-        public IRegionManager _regionManager;
-        private IModuleCatalog _moduleCatalog;
+        public BasePluginInfo CurrentPluinInfo { get; set; }
         public DelegateCommand<MenuItem> NavigateCommand { get; private set; }
         public DelegateCommand<MenuItem> MenuItemChangedCommand { get; private set; }
 
-        public MainWindowViewModel(IUnityContainer container, IRegionManager regionManager) :base(container)
+        public MainWindowViewModel(IUnityContainer container) :base(container)
         {
-            _regionManager = regionManager;
             NavigateCommand = new DelegateCommand<MenuItem>(NagivateMenu);
             //MenuItemChangedCommand = new DelegateCommand<MenuItem>(OnPluginChanged);
-            _menuitems.Add(new MenuItem { MenuItemName="主页", MenuItemIcon="Home", pluginInfo = new BasePluginInfo { PluginTypeName="PluginDemoView",PluginName= "DemoPlugin" } });
+            _menuitems.Add(new MenuItem { MenuItemName="主页", MenuItemIcon="Home", pluginInfo = new BasePluginInfo { PluginTypeName="PluginDemoView",PluginName= "DemoPluginView" } });
             _menuitems.Add(new MenuItem { MenuItemName = "用户", MenuItemIcon = "User", pluginInfo = new BasePluginInfo { PluginTypeName = "WinformPluginWrapper", PluginName= "DemoView" } });
-            _menuitems.Add(new MenuItem { MenuItemName = "设置", MenuItemIcon = "Setting", pluginInfo = new BasePluginInfo { PluginTypeName = "WinformPluginWrapper", PluginName = "WinformPlugin" } });
+            _menuitems.Add(new MenuItem { MenuItemName = "设置", MenuItemIcon = "Setting", pluginInfo = new BasePluginInfo { PluginTypeName = "WinformPluginWrapper", PluginName = "WinformPluginView" } });
 
         }
 
@@ -55,10 +54,43 @@ namespace WPFDemo
 
             if (menu != null)
             {
-                _regionManager.RequestNavigate("WinfromWrapperRegion", menu.pluginInfo.PluginName, NavigationCompleted);
+                CurrentPluinInfo = menu.pluginInfo;
+                RegionManager.RequestNavigate("WinfromWrapperRegion", menu.pluginInfo.PluginName, NavigationCompleted);
                 EventAggregator.GetEvent<PluginChangeEvent>().Publish(menu.pluginInfo);
             }
+        }
 
+        /// <summary>
+        /// 插件退出
+        /// </summary>
+        /// <param name="behaviorType"></param>
+        /// <param name="pluginName"></param>
+        public void ExitPage(MenuBehaviorType behaviorType)
+        {
+            IRegion region = RegionManager.Regions["WinfromWrapperRegion"];
+
+            var ActiveViews = region.ActiveViews;
+            switch (behaviorType)
+            {
+                case MenuBehaviorType.ExitCurrentPage:
+                    ActiveViews.ForEach(item =>
+                    {
+                        region.Remove(item);
+                    });
+                    break;
+                case MenuBehaviorType.ExitAllPage:
+                    region.RemoveAll();
+                    break;
+                case MenuBehaviorType.ExitAllExcept:
+                    region.Views.ForEach(item =>
+                    {
+                        if (!ActiveViews.Contains(item))
+                        {
+                            region.Remove(item);
+                        }
+                    });
+                    break;
+            }
         }
 
         private void NavigationCompleted(NavigationResult result)
@@ -73,7 +105,7 @@ namespace WPFDemo
 
             //GlobalMessageQueue.Enqueue(UiStrings.Message_Welcome);
 
-            _regionManager.RequestNavigate("WinfromWrapperRegion", "DefaultDashboard", NavigationCompleted);
+            RegionManager.RequestNavigate("WinfromWrapperRegion", "DefaultDashboard", NavigationCompleted);
         }
 
         public void OnUnloaded()

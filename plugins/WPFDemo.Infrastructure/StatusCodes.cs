@@ -20,4 +20,11 @@
 
         public const string InvalidEmailOrPassword = "INVALID_EMAIL_PASSWORD";
     }
+
+    public enum MenuBehaviorType
+    {
+        ExitCurrentPage,
+        ExitAllPage,
+        ExitAllExcept,
+    }
 }

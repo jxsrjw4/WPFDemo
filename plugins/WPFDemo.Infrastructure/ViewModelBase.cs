@@ -17,7 +17,8 @@ namespace WPFDemo.Infrastructure
             Container = container;
             EventAggregator = container.Resolve<IEventAggregator>();
             Logger = container.Resolve<ILoggerFacade>();
-            
+            RegionManager = container.Resolve<IRegionManager>();
+
         }
 
         public Dispatcher Dispatcher { get; set; }
@@ -27,6 +28,8 @@ namespace WPFDemo.Infrastructure
         protected IEventAggregator EventAggregator { get; }
 
         protected ILoggerFacade Logger { get; }
+
+        protected IRegionManager RegionManager { get; }
 
 
         //public IAcceleriderUser AcceleriderUser => _acceleriderUser ?? (_acceleriderUser = Container.Resolve<IAcceleriderUser>());
