@@ -14,30 +14,51 @@ namespace WPFDemo
 {
     public class MainWindowViewModel: PluginViewModelBase
     {
-        //菜单
-        private ObservableCollection<MenuItem> _menuitems = new ObservableCollection<MenuItem>();
-        public ObservableCollection<MenuItem> MenuItems
+        ///// <summary>
+        /// 已加载模块<含分组>
+        /// </summary>
+        private ObservableCollection<ModuleGroup> _menuitems = new ObservableCollection<ModuleGroup>();
+        public ObservableCollection<ModuleGroup> ModuleGroup
         {
             get { return _menuitems; }
             set { SetProperty(ref _menuitems, value); }
         }
 
         public BasePluginInfo CurrentPluinInfo { get; set; }
-        public DelegateCommand<MenuItem> NavigateCommand { get; private set; }
+        public DelegateCommand<BasePluginInfo> NavigateCommand { get; private set; }
         public DelegateCommand<MenuItem> MenuItemChangedCommand { get; private set; }
 
         public MainWindowViewModel(IUnityContainer container) :base(container)
         {
-            NavigateCommand = new DelegateCommand<MenuItem>(NagivateMenu);
+            NavigateCommand = new DelegateCommand<BasePluginInfo>(NagivateMenu);
             //MenuItemChangedCommand = new DelegateCommand<MenuItem>(OnPluginChanged);
-            _menuitems.Add(new MenuItem { MenuItemName="主页", MenuItemIcon="Home", pluginInfo = new BasePluginInfo { PluginTypeName="PluginDemoView",PluginName= "DemoPluginView" } });
-            _menuitems.Add(new MenuItem { MenuItemName = "用户", MenuItemIcon = "User", pluginInfo = new BasePluginInfo { PluginTypeName = "WinformPluginWrapper", PluginName= "DemoView" } });
-            _menuitems.Add(new MenuItem { MenuItemName = "设置", MenuItemIcon = "Setting", pluginInfo = new BasePluginInfo { PluginTypeName = "WinformPluginWrapper", PluginName = "WinformPluginView" } });
+            _menuitems.Add(new ModuleGroup 
+            { 
+                ModuleType=ModuleType.BasicData, 
+                GroupIcon="Home",
+                GroupName = "首页",
+                Modules = new List<BasePluginInfo>() { new BasePluginInfo{ PluginTypeName = "PluginDemoView", PluginName = "DemoPluginView" },new BasePluginInfo { PluginTypeName = "WinformPluginWrapper", PluginName = "DemoView" } } });
+            _menuitems.Add(new ModuleGroup
+            {
+                ModuleType = ModuleType.SystemSettings,
+                GroupIcon = "User",
+                GroupName = "用户",
+                Modules = new List<BasePluginInfo>() { new BasePluginInfo { PluginTypeName = "PluginDemoView", PluginName = "DemoPluginView" }, new BasePluginInfo { PluginTypeName = "WinformPluginWrapper", PluginName = "DemoView" } }
+            });
+
+            _menuitems.Add(new ModuleGroup
+            {
+                ModuleType = ModuleType.SystemSettings,
+                GroupIcon = "Setting",
+                GroupName="设置",
+                Modules = new List<BasePluginInfo>() { new BasePluginInfo { PluginTypeName = "PluginDemoView", PluginName = "DemoPluginView" }, new BasePluginInfo { PluginTypeName = "WinformPluginWrapper", PluginName = "DemoView" } }
+            });
+
 
         }
 
 
-        private void NagivateMenu(MenuItem menu)
+        private void NagivateMenu(BasePluginInfo pluginInfo)
         {
             //_moduleCatalog.AddModule(new ModuleInfo()
             //{
@@ -50,13 +71,13 @@ namespace WPFDemo
             //region.Add(plugin);
 
             var parameters = new NavigationParameters();
-            parameters.Add("pluginInfo", menu.pluginInfo);
+            parameters.Add("pluginInfo", pluginInfo);
 
-            if (menu != null)
+            
             {
-                CurrentPluinInfo = menu.pluginInfo;
-                RegionManager.RequestNavigate("WinfromWrapperRegion", menu.pluginInfo.PluginName, NavigationCompleted);
-                EventAggregator.GetEvent<PluginChangeEvent>().Publish(menu.pluginInfo);
+                CurrentPluinInfo = pluginInfo;
+                RegionManager.RequestNavigate("WinfromWrapperRegion", pluginInfo.PluginName, NavigationCompleted);
+                EventAggregator.GetEvent<PluginChangeEvent>().Publish(pluginInfo);
             }
         }
 

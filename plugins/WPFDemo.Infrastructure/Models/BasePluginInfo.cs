@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WPFDemo.Infrastructure.Models
 {
-    public struct BasePluginInfo
+    public class BasePluginInfo
     {
         public string PluginVersion { get; set; }
         public string PluginName { get; set; }
